@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/parameter"
+        android:title="Paramètres"
+        android:icon="@drawable/edit_text_style">
+    </item>
+
+    <item android:id="@+id/quitter"
+        android:title="Quitter"
+        android:icon="@drawable/edit_text_style" />
+</menu>
