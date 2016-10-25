@@ -39,8 +39,6 @@ public class ReceiveDataActivity extends AppCompatActivity implements LoaderMana
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Object o = listView.getSelectedItem();
-                System.out.println(o);
                 SmsData smsData = (SmsData) adapterView.getItemAtPosition(i);
 
                 Toast.makeText(ReceiveDataActivity.this, "Ouvrir message", Toast.LENGTH_SHORT).show();

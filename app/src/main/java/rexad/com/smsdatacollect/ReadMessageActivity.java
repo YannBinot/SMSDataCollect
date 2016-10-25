@@ -17,8 +17,11 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 import rexad.com.smsdatacollect.exporter.FileHelper;
+import rexad.com.smsdatacollect.ui.SMSDataCollectInput;
+import rexad.com.smsdatacollect.ui.UIDataCollectBuilder;
 
 public class ReadMessageActivity extends AppCompatActivity {
 
@@ -32,6 +35,11 @@ public class ReadMessageActivity extends AppCompatActivity {
         final String value = getIntent().getStringExtra("value");
 
 
+        UIDataCollectBuilder builder = new UIDataCollectBuilder();
+
+        final List<SMSDataCollectInput> datas =  builder.buid();
+
+
         exporter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,34 +47,15 @@ public class ReadMessageActivity extends AppCompatActivity {
                 valueToConvert = valueToConvert.replaceAll("</smsdata>", "");
                 String[] split = valueToConvert.split("@");
                 StringBuffer buffer = new StringBuffer();
-                buffer.append("Nom du village;");
-                buffer.append(split[1]+";\n");
-                buffer.append("Date;");
-                buffer.append(split[2]+";\n");
-                buffer.append("Mois de référence;");
-                buffer.append(split[3]+";\n");
-                buffer.append("Nom de l’expéditeur;");
-                buffer.append(split[4]+";\n");
-                buffer.append("M3 compteur forage du mois;");
-                buffer.append(split[5]+";\n");
-                buffer.append("M3 compteurs BF du mois;");
-                buffer.append(split[6]+";\n");
-                buffer.append("M3 compteurs BP du mois;");
-                buffer.append(split[7]+";\n");
-                buffer.append("Paiements eau de PMH dans le mois;");
-                buffer.append(split[8]+";\n");
-                buffer.append("Facturation BF et BP envoyée ce mois;");
-                buffer.append(split[9]+";\n");
-                buffer.append("Paiements BF et BP reçus ce mois;");
-                buffer.append(split[10]+";\n");
-                buffer.append("Montant mis en compte d’épargne ce mois;");
-                buffer.append(split[11]+";\n");
-                buffer.append("Solde compte d’épargne en fin de mois;");
-                buffer.append(split[12]+";\n");
-                buffer.append("Dépenses exceptionnelles du mois (nvx équipts..);");
-                buffer.append(split[13]+";\n");
-                buffer.append("Nature dépense exceptionnelle;");
-                buffer.append(split[14]+";\n");
+
+
+                int i = 1;
+                for(SMSDataCollectInput input :datas){
+                    buffer.append(input.getName()+";");
+                    buffer.append(split[i]+";\n");
+                    i++;
+                }
+
                 buffer.append("\n");
 
               System.out.println(buffer.toString());

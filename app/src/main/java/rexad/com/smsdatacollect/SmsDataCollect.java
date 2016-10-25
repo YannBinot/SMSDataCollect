@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,15 +16,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-
+import java.util.List;
+import rexad.com.smsdatacollect.ui.EditTextFactory;
+import rexad.com.smsdatacollect.ui.SMSDataCollectInput;
+import rexad.com.smsdatacollect.ui.UIDataCollectBuilder;
 import rexad.com.smsdatacollect.write.WriteSms;
 
 public class SmsDataCollect extends AppCompatActivity {
+
+
+    public static int dpToPx(int dp)
+    {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +41,19 @@ public class SmsDataCollect extends AppCompatActivity {
         setContentView(R.layout.activity_sms_data_collect);
         Button buttonOK = (Button)findViewById(R.id.okButton);
 
-        final EditText dateEditText = (EditText)findViewById(R.id.DateEditText);
+
+        LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayoutFieldData);
+
+        UIDataCollectBuilder builder = new UIDataCollectBuilder();
+
+        final List<SMSDataCollectInput> data = builder.buid();
+
+        for(SMSDataCollectInput input: data){
+            EditTextFactory.createEditTextToLayout(SmsDataCollect.this, layout, input);
+        }
+        // id date dans la factory
+
+        final EditText dateEditText = getDateEditText(3);
         dateEditText.setFreezesText(true);
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +66,7 @@ public class SmsDataCollect extends AppCompatActivity {
                   public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     cal.set(year,month,dayOfMonth);
                       SimpleDateFormat dateFormatter = new SimpleDateFormat(
-                              "dd/MM/yyyy");
+                              "yyMMdd");
                      dateEditText.setText(dateFormatter.format(cal.getTime()));
                   }
               }, cal.get(Calendar.YEAR),  cal.get(Calendar.MONTH),  cal.get(Calendar.DAY_OF_MONTH)).show();
@@ -66,21 +88,10 @@ public class SmsDataCollect extends AppCompatActivity {
 
                 WriteSms writeSms = new WriteSms();
                 boolean isSendable = true;
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.NomVillageEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.DateEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.MoisDeReferenceEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.NomExpediteurEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.M3CompteurForageDuMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.M3CompteursBFDuMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.M3CompteursBPDuMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.PaiementsEauDePMHDansLeMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.FacturationBFetBPEnvoyeeCeMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.PaiementsBFetBPrecusCeMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.MontantMisEnCompteEpargneCeMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.SoldeCompteEpargneEnFinDeMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.DepensesExceptionnellesDuMoisEditText));
-                isSendable&=writeSms.addParameterToWrite(getValue(R.id.NatureDepenseExceptionnelleEditText));
-                //String message = "Salut, Je t'envoie ce message pour tester l'application";
+
+                for(SMSDataCollectInput input : data){
+                    isSendable&=writeSms.addParameterToWrite(getValue(input.getId()));
+                }
 
                 String message = writeSms.writeMessage();
 
@@ -95,6 +106,16 @@ public class SmsDataCollect extends AppCompatActivity {
             }
         });
 
+    }
+
+    private EditText getDateEditText(int id){
+
+        View view = findViewById(id);
+        if(view instanceof  EditText) {
+            return (EditText) view;
+        }
+
+        return null;
     }
 
     private String getValue(int id){
