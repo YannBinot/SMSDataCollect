@@ -45,47 +45,44 @@ public class ReadMessageActivity extends AppCompatActivity {
 
         final List<SMSDataCollectInput> datas =  builder.buid();
 
+        String valueToConvert = value.replaceAll("<smsdata>", "");
+        valueToConvert = valueToConvert.replaceAll("</smsdata>", "");
+        final String[] split = valueToConvert.split("@");
+
+        StringBuffer bufferForDisplay =  new StringBuffer();
+        int i = 1;
+        for(SMSDataCollectInput input:datas){
+            bufferForDisplay.append((input.getName()+" : "+split[i] +"\n\n"));
+            i++;
+        }
 
 
-
-// TODO refactorer le source pour sortir le code de "split".
         exporter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String valueToConvert = value.replaceAll("<smsdata>", "");
-                valueToConvert = valueToConvert.replaceAll("</smsdata>", "");
-                String[] split = valueToConvert.split("@");
                 StringBuffer buffer = new StringBuffer();
-
-
                 int i = 1;
                 for(SMSDataCollectInput input :datas){
                     buffer.append(input.getName()+";");
                     buffer.append(split[i]+";\n");
                     i++;
                 }
-
                 buffer.append("\n");
-
               System.out.println(buffer.toString());
                 if (true){// TODO faire le bon test
                     String file  =  "data"+  Calendar.getInstance().getTimeInMillis()+".csv";
 
                     try {
-
-
-                        String chemin =Environment.getExternalStorageDirectory().toString()+"/Download/";//getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+                        String chemin =Environment.getExternalStorageDirectory().toString()+"/Download/";
                         File fichier = new File(chemin, file);
-                        System.out.println(fichier.getAbsolutePath().toString());
                         fichier.createNewFile();
                         FileWriter filewriter = new FileWriter(fichier,true);
                         filewriter.write(buffer.toString());
                         filewriter.close();
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
                     Toast.makeText(ReadMessageActivity.this,"Saved to file",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(ReadMessageActivity.this,"Error save file!!!",Toast.LENGTH_SHORT).show();
@@ -95,6 +92,6 @@ public class ReadMessageActivity extends AppCompatActivity {
         });
 
 
-        tv.setText(value);
+        tv.setText(bufferForDisplay.toString());
     }
 }

@@ -13,13 +13,31 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:weightSum="1">
 
-        <TextView
-            android:text="TextView"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/readMessage" />
+            android:fillViewport="false"
+            android:clipToPadding="false"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:minHeight="181dp"
+            android:layout_weight="0.77">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/readMessage" />
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:text="Exporter"
