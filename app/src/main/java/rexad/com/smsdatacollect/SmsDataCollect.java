@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import rexad.com.smsdatacollect.ui.EditTextFactory;
@@ -97,7 +98,8 @@ public class SmsDataCollect extends AppCompatActivity {
 
                 if(numero.length() >=4 && message.length()>0 && isSendable){
                     System.out.println(message);
-                    SmsManager.getDefault().sendTextMessage(numero, null, message,null,null);
+                    ArrayList<String> parts = SmsManager.getDefault().divideMessage(message);
+                    SmsManager.getDefault().sendMultipartTextMessage(numero, null, parts,null,null);// TODO gere le multisms
                     Toast.makeText(SmsDataCollect.this, "Message envoyé", Toast.LENGTH_SHORT).show();
                 }
                 else{

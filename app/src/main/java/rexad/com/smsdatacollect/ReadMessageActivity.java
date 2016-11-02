@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,11 @@ import rexad.com.smsdatacollect.exporter.FileHelper;
 import rexad.com.smsdatacollect.ui.SMSDataCollectInput;
 import rexad.com.smsdatacollect.ui.UIDataCollectBuilder;
 
+/**
+ * This class read selected message.
+ * Dynamically the field and the associate value are displayed.
+ * @author Yann
+ */
 public class ReadMessageActivity extends AppCompatActivity {
 
     @Override
@@ -40,6 +46,9 @@ public class ReadMessageActivity extends AppCompatActivity {
         final List<SMSDataCollectInput> datas =  builder.buid();
 
 
+
+
+// TODO refactorer le source pour sortir le code de "split".
         exporter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +68,7 @@ public class ReadMessageActivity extends AppCompatActivity {
                 buffer.append("\n");
 
               System.out.println(buffer.toString());
-                if (true){
+                if (true){// TODO faire le bon test
                     String file  =  "data"+  Calendar.getInstance().getTimeInMillis()+".csv";
 
                     try {
