@@ -63,12 +63,12 @@ public class ReadMessageActivity extends AppCompatActivity {
                 StringBuffer buffer = new StringBuffer();
                 int i = 1;
                 for(SMSDataCollectInput input :datas){
-                    buffer.append(input.getName()+";");
+                    buffer.append(input.getShortName()+";");
                     buffer.append(split[i]+";\n");
                     i++;
                 }
                 buffer.append("\n");
-              System.out.println(buffer.toString());
+
                 if (true){// TODO faire le bon test
                     String file  =  "data"+  Calendar.getInstance().getTimeInMillis()+".csv";
 
