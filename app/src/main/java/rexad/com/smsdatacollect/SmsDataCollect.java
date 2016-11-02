@@ -37,7 +37,7 @@ public class SmsDataCollect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_data_collect);
         Button buttonOK = (Button)findViewById(R.id.okButton);
-
+        Button buttonClear = (Button) findViewById(R.id.clearButton);
 
         LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayoutFieldData);
 
@@ -69,6 +69,24 @@ public class SmsDataCollect extends AppCompatActivity {
               }, cal.get(Calendar.YEAR),  cal.get(Calendar.MONTH),  cal.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+
+        buttonClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               for(SMSDataCollectInput input:data){
+                   EditText editText = (EditText)findViewById(input.getId());
+                   editText.setText("");
+                   SharedPreferences settings = getSharedPreferences("SmsDataCollect", 0);
+                   SharedPreferences.Editor editor = settings.edit();
+                   editor.putString(input.getShortName().trim(),editText.getText().toString());
+
+                   // Commit the edits!
+                   editor.commit();
+               }
+            }
+        });
+
 
         buttonOK.setOnClickListener(new View.OnClickListener() {
             @Override
