@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import rexad.com.smsdatacollect.R;
 
 
@@ -71,6 +75,8 @@ public class EditTextFactory {
             @Override
             public void afterTextChanged(Editable editable) {
 
+
+
                 SharedPreferences settings = context.getSharedPreferences("SmsDataCollect", 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putString(dataInput.getShortName().trim(),t.getText().toString());
@@ -85,6 +91,19 @@ public class EditTextFactory {
 
         });
 
+        InputFilter filter = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence charSequence, int start, int end, Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if(charSequence.charAt(i) == '@'){
+                        Toast.makeText(context,"'@' est un caractère interdit",Toast.LENGTH_SHORT).show();
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+        t.setFilters(new InputFilter[]{filter});
 
         layout.addView(t);
 
