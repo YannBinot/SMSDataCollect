@@ -17,8 +17,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import rexad.com.smsdatacollect.exporter.FileHelper;
 import rexad.com.smsdatacollect.ui.SMSDataCollectInput;
@@ -70,7 +73,16 @@ public class ReadMessageActivity extends AppCompatActivity {
                 buffer.append("\n");
 
                 if (true){// TODO faire le bon test
-                    String file  =  "data"+  Calendar.getInstance().getTimeInMillis()+".csv";
+
+
+
+                    Date time = Calendar.getInstance().getTime();
+
+                    SimpleDateFormat dateFormatter = new SimpleDateFormat(
+                            "yyyy-MM-dd k_mm", Locale.getDefault());
+                    String date = dateFormatter.format(time);
+
+                    String file  =  split[1]+"-"+date+".csv";
 
                     try {
                         String chemin =Environment.getExternalStorageDirectory().toString()+"/Download/";
