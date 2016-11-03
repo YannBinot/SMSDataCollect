@@ -69,6 +69,7 @@ public class ReceiveDataActivity extends AppCompatActivity implements LoaderMana
 
                 String phone = cursor.getString(cursor.getColumnIndexOrThrow("address")).toString();
                 String body = cursor.getString(cursor.getColumnIndexOrThrow("body")).toString();
+                String date = cursor.getString(cursor.getColumnIndexOrThrow("date")).toString();
                 if(!body.contains("<smsdata>")){
                     cursor.moveToNext();
                     continue;
@@ -76,7 +77,7 @@ public class ReceiveDataActivity extends AppCompatActivity implements LoaderMana
                 SmsData smsdata = new SmsData();
                 smsdata.setNumber(phone);
                 smsdata.setBody(body);
-
+                smsdata.setDate(date);
                 listInput.add(smsdata);
 
                 cursor.moveToNext();
