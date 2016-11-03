@@ -42,13 +42,13 @@
             android:layout_height="match_parent">
 
             <Button
-                android:text="Ok"
+                android:text="Envoyer"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/okButton" />
 
             <Button
-                android:text="Clear"
+                android:text="Nettoyer"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:id="@+id/clearButton"/>
