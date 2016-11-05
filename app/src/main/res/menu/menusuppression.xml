@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/supprimer"
+        android:title="Supprimer"
+        android:icon="@drawable/edit_text_style">
+    </item>
+    <item android:id="@+id/checkbox"
+        android:title="Selectionner"
+        android:icon="@drawable/edit_text_style">
+    </item>
+</menu>

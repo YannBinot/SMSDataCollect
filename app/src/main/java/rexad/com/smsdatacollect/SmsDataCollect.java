@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,20 +35,18 @@ public class SmsDataCollect extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms_data_collect);
+
         Button buttonOK = (Button)findViewById(R.id.okButton);
         Button buttonClear = (Button) findViewById(R.id.clearButton);
-
         LinearLayout layout = (LinearLayout)findViewById(R.id.linearLayoutFieldData);
 
         UIDataCollectBuilder builder = new UIDataCollectBuilder();
-
         final List<SMSDataCollectInput> data = builder.buid();
-
         for(SMSDataCollectInput input: data){
             EditTextFactory.createEditTextToLayout(SmsDataCollect.this, layout, input);
         }
-        // id date dans la factory
 
+        // id date dans la factory
         final EditText dateEditText = getDateEditText(3);
         dateEditText.setFreezesText(true);
         dateEditText.setOnClickListener(new View.OnClickListener() {

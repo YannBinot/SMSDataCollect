@@ -12,6 +12,27 @@ public class SmsData {
 
     private String date;
 
+    private String id;
+
+
+    private boolean selected;
+
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNumber() {
         return number;
